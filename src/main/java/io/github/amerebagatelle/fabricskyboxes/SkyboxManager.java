@@ -4,10 +4,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
+import dev.architectury.event.events.client.ClientTickEvent;
 import io.github.amerebagatelle.fabricskyboxes.api.FabricSkyBoxesApi;
 import io.github.amerebagatelle.fabricskyboxes.api.skyboxes.FSBSkybox;
 import io.github.amerebagatelle.fabricskyboxes.api.skyboxes.Skybox;
-import io.github.amerebagatelle.fabricskyboxes.fabricapi.event.lifecycle.v1.ClientTickEvents;
 import io.github.amerebagatelle.fabricskyboxes.mixin.skybox.WorldRendererAccess;
 import io.github.amerebagatelle.fabricskyboxes.skyboxes.AbstractSkybox;
 import io.github.amerebagatelle.fabricskyboxes.skyboxes.SkyboxType;
@@ -29,7 +29,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class SkyboxManager implements FabricSkyBoxesApi, ClientTickEvents.EndWorldTick {
+public class SkyboxManager implements FabricSkyBoxesApi, ClientTickEvent.ClientLevel {
     private static final SkyboxManager INSTANCE = new SkyboxManager();
     private final Map<Identifier, Skybox> skyboxMap = new Object2ObjectLinkedOpenHashMap<>();
     /**
@@ -164,7 +164,7 @@ public class SkyboxManager implements FabricSkyBoxesApi, ClientTickEvents.EndWor
     }
 
     @Override
-    public void onEndTick(ClientWorld world) {
+    public void tick(ClientWorld world) {
         // Add the skyboxes to a activeSkyboxes container so that they can be ordered
         this.skyboxMap.values().stream().filter(this.renderPredicate).forEach(this.activeSkyboxes::add);
         this.permanentSkyboxMap.values().stream().filter(this.renderPredicate).forEach(this.activeSkyboxes::add);

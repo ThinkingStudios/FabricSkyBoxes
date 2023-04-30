@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.Lifecycle;
 import io.github.amerebagatelle.fabricskyboxes.FabricSkyBoxesClient;
-import io.github.amerebagatelle.fabricskyboxes.fabricapi.event.registry.FabricRegistryBuilder;
+import org.portinglab.forgedfabricapi.registry.FabricRegistryBuilder;
 import io.github.amerebagatelle.fabricskyboxes.skyboxes.textured.SquareTexturedSkybox;
 import io.github.amerebagatelle.fabricskyboxes.util.JsonObjectWrapper;
 import io.github.amerebagatelle.fabricskyboxes.util.object.*;

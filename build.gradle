@@ -5,33 +5,20 @@ plugins {
 }
 
 archivesBaseName = project.archives_base_name
-version = "${project.mod_version}+mc${project.minecraft_version}"
+version = "${project.mod_version}-mc${project.minecraft_version}"
 group = project.maven_group
 
 loom {
     forge {
-        mixinConfig("fabricskyboxes.mixins.json")
+        mixinConfigs = [
+                "fabricskyboxes.mixins.json","forgedfabricapi.mixins.json"
+        ]
     }
 }
-
-
-sourceSets {
-    testmod {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-    }
-}
-
 
 repositories {
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
-    }
-    maven { url 'https://jitpack.io' }
+    maven { url "https://api.modrinth.com/maven" }
+    maven { url "https://jitpack.io" }
     mavenCentral()
 }
 
@@ -40,7 +27,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     forge "net.minecraftforge:forge:${project.forge_version}"
 
-    modImplementation "com.github.PortingLab:ForgedFabricLoaderAPI:v0.1.4-1.17_1.19"
+    modImplementation "dev.architectury:architectury-forge:${project.architectury_version}"
 
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
@@ -48,8 +35,6 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
-
-    testmodImplementation sourceSets.main.output
 }
 
 processResources {
@@ -75,8 +60,3 @@ java {
 jar {
     from "LICENSE"
 }
-/*
-runClient {
-    classpath(sourceSets.testmod.runtimeClasspath)
-}
- */

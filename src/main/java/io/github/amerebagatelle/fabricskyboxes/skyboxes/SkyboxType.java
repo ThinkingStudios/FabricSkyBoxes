@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableBiMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 import io.github.amerebagatelle.fabricskyboxes.FabricSkyBoxesClient;
-import io.github.amerebagatelle.fabricskyboxes.fabricapi.event.registry.FabricRegistryBuilder;
+import org.portinglab.forgedfabricapi.registry.FabricRegistryBuilder;
 import io.github.amerebagatelle.fabricskyboxes.skyboxes.textured.AnimatedSquareTexturedSkybox;
 import io.github.amerebagatelle.fabricskyboxes.skyboxes.textured.SingleSpriteAnimatedSquareTexturedSkybox;
 import io.github.amerebagatelle.fabricskyboxes.skyboxes.textured.SingleSpriteSquareTexturedSkybox;
