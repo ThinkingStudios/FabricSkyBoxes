@@ -2,14 +2,19 @@ package io.github.amerebagatelle.fabricskyboxes;
 
 import io.github.amerebagatelle.fabricskyboxes.skyboxes.SkyboxType;
 import io.github.amerebagatelle.fabricskyboxes.util.object.*;
-import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.registry.Registry;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.joml.Vector3f;
 
-public class TestClientModInitializer implements ClientModInitializer {
+@Mod("fabricskyboxes_test")
+public class TestClientModInitializer {
     static final SkyboxType<TestSkybox> TYPE;
     static final Properties PROPS;
     static final Conditions CONDITIONS;
@@ -52,8 +57,13 @@ public class TestClientModInitializer implements ClientModInitializer {
                 .build();
     }
 
-    @Override
-    public void onInitializeClient() {
+    public TestClientModInitializer() {
+        IEventBus MOD_BUS = FMLJavaModLoadingContext.get().getModEventBus();
+        MOD_BUS.addListener(this::onInitializeClient);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    public void onInitializeClient(final FMLClientSetupEvent event) {
         Registry.register(SkyboxType.REGISTRY, TYPE.createId("test"), TYPE);
         SkyboxManager.getInstance().addPermanentSkybox(Identifier.of("fabricskyboxes_testmod", "test_skybox"), TestSkybox.INSTANCE);
     }

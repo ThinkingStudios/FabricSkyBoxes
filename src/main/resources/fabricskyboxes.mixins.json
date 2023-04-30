@@ -4,13 +4,16 @@
   "package": "io.github.amerebagatelle.fabricskyboxes.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "registry.sync.RegistriesAccessor"
   ],
   "client": [
     "skybox.BackgroundRendererMixin",
     "skybox.FogColorMixin",
     "skybox.SkyboxRenderMixin",
     "skybox.SunSkyColorMixin",
-    "skybox.WorldRendererAccess"
+    "skybox.WorldRendererAccess",
+    "client.keybinding.KeyBindingAccessor",
+    "client.keybinding.GameOptionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

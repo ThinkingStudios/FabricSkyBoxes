@@ -1,0 +1,38 @@
+modLoader="javafml"
+loaderVersion="[44,)"
+license="MIT"
+
+[[mods]]
+modId="fabricskyboxes"
+version="${version}"
+displayName="ForgeSkyBoxes"
+displayURL="https://github.com/ThinkingStudios/FabricSkyBoxes"
+logoFile="./assets/fabricskyboxes/fabricskyboxes_logo.png"
+credits="AMereBagatelle"
+authors="TexTrue, ThinkingStudio"
+description='''
+FabricSkyBoxes unofficial forge port.
+
+Adds custom skybox support to MC.
+'''
+
+[[dependencies.fabricskyboxes]]
+modId = "forge"
+mandatory = true
+versionRange = "[44,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fabricskyboxes]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.3,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fabricskyboxes]]
+modId = "forgedfabricloader"
+mandatory = true
+versionRange = "[0.1.4,)"
+ordering = "NONE"
+side = "CLIENT"
