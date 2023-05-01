@@ -2,8 +2,12 @@ package io.github.amerebagatelle.fabricskyboxes;
 
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.resource.ReloadableResourceManagerImpl;
+import net.minecraft.resource.ResourceManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.portinglab.forgedfabricapi.resource.ResourceManagerHelper;
 import io.github.amerebagatelle.fabricskyboxes.resource.SkyboxResourceListener;
@@ -21,7 +25,6 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 @Mod(FabricSkyBoxesClient.MODID)
-@OnlyIn(Dist.CLIENT)
 public class FabricSkyBoxesClient {
     public static final String MODID = "fabricskyboxes";
     private static Logger LOGGER;
@@ -34,16 +37,22 @@ public class FabricSkyBoxesClient {
         return LOGGER;
     }
 
-    //public FabricSkyBoxesClient() {
-    //    IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-    //    modEventBus.addListener(this::onInitializeClient);
-    //    MinecraftForge.EVENT_BUS.register(this);
-    //}
-
     public FabricSkyBoxesClient() {
+        MinecraftForge.EVENT_BUS.register(this);
+
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> this::onInitializeClient);
+    }
+
+    public void onInitializeClient() {
         SkyboxType.initRegistry();
         KeyMappingRegistry.register(toggleFabricSkyBoxes);
-        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SkyboxResourceListener());
+        //ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SkyboxResourceListener());
+        SkyboxResourceListener reloadListener = new SkyboxResourceListener();
+        ResourceManager resourceManager = MinecraftClient.getInstance().getResourceManager();
+        if (resourceManager instanceof ReloadableResourceManagerImpl) {
+            ReloadableResourceManagerImpl reloadableResourceManager = (ReloadableResourceManagerImpl) resourceManager;
+            reloadableResourceManager.registerReloader(reloadListener);
+        }
         ClientTickEvent.CLIENT_LEVEL_POST.register(SkyboxManager.getInstance());
         ClientTickEvent.CLIENT_POST.register(client -> {
             while (toggleFabricSkyBoxes.wasPressed()) {
