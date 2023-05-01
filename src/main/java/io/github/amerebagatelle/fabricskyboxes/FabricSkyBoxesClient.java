@@ -34,13 +34,13 @@ public class FabricSkyBoxesClient {
         return LOGGER;
     }
 
-    public FabricSkyBoxesClient() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(this::onInitializeClient);
-        MinecraftForge.EVENT_BUS.register(this);
-    }
+    //public FabricSkyBoxesClient() {
+    //    IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    //    modEventBus.addListener(this::onInitializeClient);
+    //    MinecraftForge.EVENT_BUS.register(this);
+    //}
 
-    public void onInitializeClient(final FMLClientSetupEvent event) {
+    public FabricSkyBoxesClient() {
         SkyboxType.initRegistry();
         KeyMappingRegistry.register(toggleFabricSkyBoxes);
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SkyboxResourceListener());
