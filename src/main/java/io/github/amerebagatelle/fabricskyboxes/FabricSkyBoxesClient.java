@@ -1,8 +1,8 @@
 package io.github.amerebagatelle.fabricskyboxes;
 
 import dev.architectury.event.events.client.ClientTickEvent;
-import dev.architectury.platform.forge.EventBuses;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.portinglab.forgedfabricapi.resource.ResourceManagerHelper;
@@ -36,8 +36,8 @@ public class FabricSkyBoxesClient {
 
     public FabricSkyBoxesClient() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        EventBuses.registerModEventBus(MODID, modEventBus);
         modEventBus.addListener(this::onInitializeClient);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     public void onInitializeClient(final FMLClientSetupEvent event) {
