@@ -4,7 +4,6 @@
   "package": "io.github.amerebagatelle.fabricskyboxes.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "org.portinglab.forgedfabricapi.mixin.sync.RegistriesAccessor"
   ],
   "client": [
     "skybox.BackgroundRendererMixin",
