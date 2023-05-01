@@ -3,6 +3,7 @@ package io.github.amerebagatelle.fabricskyboxes;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.platform.forge.EventBuses;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.portinglab.forgedfabricapi.resource.ResourceManagerHelper;
 import io.github.amerebagatelle.fabricskyboxes.resource.SkyboxResourceListener;
@@ -34,8 +35,9 @@ public class FabricSkyBoxesClient {
     }
 
     public FabricSkyBoxesClient() {
-        EventBuses.registerModEventBus(MODID, FMLJavaModLoadingContext.get().getModEventBus());
-        EventBuses.getModEventBus(MODID).get().addListener(this::onInitializeClient);
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        EventBuses.registerModEventBus(MODID, modEventBus);
+        modEventBus.addListener(this::onInitializeClient);
     }
 
     public void onInitializeClient(final FMLClientSetupEvent event) {
